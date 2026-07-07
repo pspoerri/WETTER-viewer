@@ -46,7 +46,9 @@ sources:
                            # off   = never fetch; serve whatever is buffered
     interval: 15m
     keep_runs: 2           # retention; older runs are pruned (0 = keep all)
-    variables: [t_2m, ...] # optional allowlist of upstream variable names
+    variables: [t_2m, ...] # optional allowlist of upstream variable names;
+                           # include hsurf — temperature downscaling
+                           # (lapse-rate terrain correction) needs it
     max_step: 48           # optional forecast-hour cap
     info:                  # optional attribution block, served by /api/models
       name: ICON-D2        # friendly name shown in the UI's model switcher

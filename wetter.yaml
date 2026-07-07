@@ -22,6 +22,10 @@ map:
   terrain: "https://tiles.mapterhorn.com/{z}/{x}/{y}.webp"
 
 sources:
+  # Keep hsurf in every `variables` allowlist: the temperature
+  # downscaling (lapse-rate terrain correction, t_2m_lapsed) needs the
+  # model's surface elevation.
+
   # DWD ICON-D2 (deterministic, Germany + surroundings, ~2 km)
   - id: icond2
     type: dwd-opendata
@@ -47,7 +51,7 @@ sources:
     fetch: once
     interval: 15m
     keep_runs: 1
-    variables: [t_2m, vmax_10m, tot_prec, clct]
+    variables: [t_2m, vmax_10m, tot_prec, clct, hsurf]
     max_step: 6
     info:
       name: ICON-D2-EPS
@@ -102,7 +106,7 @@ sources:
     model: icon-eps
     fetch: once
     keep_runs: 1
-    variables: [t_2m, vmax_10m, tot_prec, clct]
+    variables: [t_2m, vmax_10m, tot_prec, clct, hsurf]
     max_step: 12
     info:
       name: ICON-EPS Global
