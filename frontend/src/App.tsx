@@ -679,8 +679,17 @@ export default function App() {
 
   const weatherStyleRef = useRef(weatherStyle);
   const activeTimestepRef = useRef(activeTimestep);
+  const effTimeFormatRef = useRef(effTimeFormat);
   useEffect(() => { weatherStyleRef.current = weatherStyle; }, [weatherStyle]);
   useEffect(() => { activeTimestepRef.current = activeTimestep; }, [activeTimestep]);
+  useEffect(() => { effTimeFormatRef.current = effTimeFormat; }, [effTimeFormat]);
+
+  // Lead reference of a style's axis, mirroring the lead display's own
+  // fallback chain: the run id when parseable, else the axis head (+0h).
+  const leadRefOf = (run: string | undefined, ts: string[]): number => {
+    const ms = run ? Date.parse(run) : NaN;
+    return Number.isFinite(ms) ? ms : Date.parse(ts[0] ?? "");
+  };
 
   useEffect(() => {
     if (!selectedModel || !primaryVar) {
@@ -700,6 +709,10 @@ export default function App() {
       prevIdx >= 0 && prevTs[prevIdx]
         ? Date.parse(prevTs[prevIdx])
         : NaN;
+    const prevLeadRefMs = leadRefOf(
+      weatherStyleRef.current?.metadata["weather-api:run"],
+      prevTs,
+    );
 
     const ctrl = new AbortController();
     setLoading(true);
@@ -720,15 +733,22 @@ export default function App() {
         const timesteps = style.metadata["weather-api:timesteps"] ?? [];
         const anchor = style.metadata["weather-api:start"];
         if (Number.isFinite(targetMs) && timesteps.length > 0) {
-          // Layer/model switch: keep the user's current wall-clock
-          // position. When the new axis doesn't cover it, nearest
-          // clamps to the closest edge (earliest frame when the
-          // position lies before the axis, last frame when beyond) —
-          // NOT the server anchor, which would yank the view to ≈now.
-          // Deliberate: matching always compares wall-clock time, even
-          // in lead-time display mode (tf=lead) — the same real-world
-          // moment is preserved across sources, not the same +Xh lead.
-          setActiveTimestep(nearestTimestepIndex(timesteps, targetMs));
+          // Layer/model switch: preserve the user's position. In
+          // wall-clock display the same real-world moment is kept; in
+          // lead display (tf=lead) the same +Xh lead is kept instead,
+          // re-based onto the new axis's lead reference. Either way,
+          // when the new axis doesn't cover the position, nearest
+          // clamps to the closest edge (earliest frame when it lies
+          // before the axis, last frame when beyond) — NOT the server
+          // anchor, which would yank the view to ≈now.
+          let matchMs = targetMs;
+          if (effTimeFormatRef.current === "lead") {
+            const newLeadRefMs = leadRefOf(meta.run, timesteps);
+            if (Number.isFinite(prevLeadRefMs) && Number.isFinite(newLeadRefMs)) {
+              matchMs = newLeadRefMs + (targetMs - prevLeadRefMs);
+            }
+          }
+          setActiveTimestep(nearestTimestepIndex(timesteps, matchMs));
         } else {
           // First load → open at the server's start anchor (≈ now, but off
           // a de-accumulation's empty analysis frame).
