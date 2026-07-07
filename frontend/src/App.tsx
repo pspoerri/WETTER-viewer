@@ -671,6 +671,12 @@ export default function App() {
   // Mirror weatherStyle + activeTimestep into refs so the layer-load
   // effect can read the OLD layer's timeline at the moment a switch
   // fires, without re-running on every step change.
+  // Bumped by the map manager's latest-run watchdog: a run flip upstream
+  // must refresh the run-derived state here too (timesteps axis, anchor),
+  // not just the manager's own window caches.
+  const [runEpoch, setRunEpoch] = useState(0);
+  const handleRunFlip = useCallback(() => setRunEpoch((n) => n + 1), []);
+
   const weatherStyleRef = useRef(weatherStyle);
   const activeTimestepRef = useRef(activeTimestep);
   useEffect(() => { weatherStyleRef.current = weatherStyle; }, [weatherStyle]);
@@ -749,7 +755,7 @@ export default function App() {
       });
 
     return () => ctrl.abort();
-  }, [selectedModel, primaryVar, selectedRun]);
+  }, [selectedModel, primaryVar, selectedRun, runEpoch]);
 
   // ---- Layer management callbacks ----
 
@@ -1135,6 +1141,7 @@ export default function App() {
           clickPoint={clickPoint}
           onGpuLoadingChange={setGpuLoading}
           onDemAvailabilityChange={setDemAvailable}
+          onRunFlip={handleRunFlip}
           initialView={initialHash.current?.view}
           onViewChange={handleViewChange}
           windowMode={windowMode}

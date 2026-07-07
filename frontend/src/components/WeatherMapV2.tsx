@@ -137,6 +137,8 @@ interface Props {
   /** E5: fired once the shared z_site DEM's availability is known this
    *  session (success or a 404) — gates the legend's per-layer ⛰ toggle. */
   onDemAvailabilityChange?: (available: boolean) => void;
+  /** The latest run for a visible model changed upstream (watchdog). */
+  onRunFlip?: (model: string) => void;
   initialView?: {
     center: [number, number];
     zoom: number;
@@ -775,6 +777,7 @@ const WeatherMapV2 = forwardRef<WeatherMapHandle, Props>(function WeatherMapV2(
           map,
           (loading) => p.current.onGpuLoadingChange?.(loading),
           (available) => p.current.onDemAvailabilityChange?.(available),
+          (model) => p.current.onRunFlip?.(model),
         );
         mgr.setHdr(p.current.hdr);
         mgr.setPinnedRun(p.current.selectedModel, p.current.selectedRun ?? "");
@@ -864,6 +867,7 @@ const WeatherMapV2 = forwardRef<WeatherMapHandle, Props>(function WeatherMapV2(
         map,
         (l) => p.current.onGpuLoadingChange?.(l),
         (available) => p.current.onDemAvailabilityChange?.(available),
+        (model) => p.current.onRunFlip?.(model),
       );
       mgr.setHdr(p.current.hdr);
       mgr.setPinnedRun(p.current.selectedModel, p.current.selectedRun ?? "");

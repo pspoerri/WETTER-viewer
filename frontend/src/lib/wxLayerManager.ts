@@ -284,20 +284,29 @@ export class WxLayerManager {
     map: MaplibreMap,
     onLoading?: (loading: boolean) => void,
     onDemAvailability?: (available: boolean) => void,
+    onRunFlip?: (model: string) => void,
   ) {
     this.map = map;
     this.onLoading = onLoading;
     this.onDemAvailability = onDemAvailability;
+    this.onRunFlip = onRunFlip;
     map.on("moveend", this.onMove);
-    this.runWatchTimer = window.setInterval(() => void this.checkLatestRuns(), 60_000);
+    // Bare setInterval (not window.*): unit tests construct the manager in
+    // Node — and unref there so an undisposed manager can't hang the process.
+    this.runWatchTimer = setInterval(() => void this.checkLatestRuns(), 60_000);
+    (this.runWatchTimer as unknown as { unref?: () => void }).unref?.();
   }
+
+  /** Fired when the latest-run watchdog sees a model's run id flip, so the
+   *  app can refresh run-derived state (timesteps axis, run label). */
+  private onRunFlip?: (model: string) => void;
 
   // Latest-run watchdog: meta and window caches are keyed "latest" and would
   // otherwise serve a superseded run forever in a long-open tab (or when
   // switching back to a previously viewed source) — only a reload flushed
   // them. Poll each visible model's meta once a minute; on a run flip drop
   // that model's cached meta + windows and re-render.
-  private runWatchTimer = 0;
+  private runWatchTimer: ReturnType<typeof setInterval> | undefined;
   private seenRun = new Map<string, string>(); // model → last seen run id
 
   private async checkLatestRuns(): Promise<void> {
@@ -328,6 +337,7 @@ export class WxLayerManager {
         if (u.model === model) this.flowMetaResolved.delete(u.model);
       }
       this.scheduleApply();
+      this.onRunFlip?.(model);
     }
   }
 
@@ -384,7 +394,7 @@ export class WxLayerManager {
     this.map.off("moveend", this.onMove);
     if (this.applyRaf) cancelAnimationFrame(this.applyRaf);
     if (this.moveTimer) window.clearTimeout(this.moveTimer);
-    window.clearInterval(this.runWatchTimer);
+    clearInterval(this.runWatchTimer);
     for (const rec of this.activeFetches) rec.ac.abort();
     this.activeFetches.clear();
     this.demWin.clear();
