@@ -1993,6 +1993,16 @@ button.model-info-display-btn:hover:not(:disabled) {
   border-bottom: 2px solid var(--border);
 }
 
+/* A long place name must truncate, not push the view toggles and the
+   ✕ past the popup's overflow:hidden edge (flexbox min-width:auto). */
+.point-popup-header > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.point-popup-header .point-popup-actions { flex-shrink: 0; }
+
 .close-btn {
   background: none;
   border: none;
