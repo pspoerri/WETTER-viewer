@@ -720,24 +720,15 @@ export default function App() {
         const timesteps = style.metadata["weather-api:timesteps"] ?? [];
         const anchor = style.metadata["weather-api:start"];
         if (Number.isFinite(targetMs) && timesteps.length > 0) {
-          // Preserve the user's wall-clock position when the new
-          // layer covers it; otherwise snap to the server anchor so
-          // the new preset's range is exposed (e.g. forecast →
-          // satellite-history opens at the anchor rather than frame 0).
-          const firstMs = Date.parse(timesteps[0]);
-          const lastMs = Date.parse(timesteps[timesteps.length - 1]);
-          if (
-            Number.isFinite(firstMs) &&
-            Number.isFinite(lastMs) &&
-            targetMs >= firstMs &&
-            targetMs <= lastMs
-          ) {
-            // Layer switch: keep the user's current wall-clock position.
-            setActiveTimestep(nearestTimestepIndex(timesteps, targetMs));
-          } else {
-            // New layer doesn't cover the old position → open at the anchor.
-            setActiveTimestep(startAnchorIndex(timesteps, anchor));
-          }
+          // Layer/model switch: keep the user's current wall-clock
+          // position. When the new axis doesn't cover it, nearest
+          // clamps to the closest edge (earliest frame when the
+          // position lies before the axis, last frame when beyond) —
+          // NOT the server anchor, which would yank the view to ≈now.
+          // Deliberate: matching always compares wall-clock time, even
+          // in lead-time display mode (tf=lead) — the same real-world
+          // moment is preserved across sources, not the same +Xh lead.
+          setActiveTimestep(nearestTimestepIndex(timesteps, targetMs));
         } else {
           // First load → open at the server's start anchor (≈ now, but off
           // a de-accumulation's empty analysis frame).
