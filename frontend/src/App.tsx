@@ -130,7 +130,7 @@ export default function App() {
   // a hash referencing a user preset id can resolve on first render.
   const [userPresets, setUserPresets] = useState<MapConfig[]>(() => loadUserPresets());
 
-  // Server-defined presets from the backend config (wetter.yaml
+  // Server-defined presets from the backend config (grib-viewer.yaml
   // `presets:` block). Fetched once; listed like user presets but not
   // deletable and never written to localStorage.
   const [serverPresets, setServerPresets] = useState<MapConfig[]>([]);
@@ -1104,7 +1104,7 @@ export default function App() {
   // browser tab tells the user which layer they're looking at —
   // useful for bookmarks, history, and tab-switching.
   useEffect(() => {
-    const baseTitle = "Wetter";
+    const baseTitle = "GRIB Viewer";
     if (!activePreset) {
       document.title = baseTitle;
       return;
@@ -1119,8 +1119,8 @@ export default function App() {
     const topicId = findTopicForPresetId(activePreset, allPresets);
     const topic = topicId ? TOPICS.find((t) => t.id === topicId) : undefined;
     // Single-option topics (or unmatched presets) skip the topic
-    // qualifier — "Wetter — CAPE" reads cleaner than
-    // "Wetter — Precipitation · CAPE" when the topic and
+    // qualifier — "GRIB Viewer — CAPE" reads cleaner than
+    // "GRIB Viewer — Precipitation · CAPE" when the topic and
     // sub-option are the same in spirit.
     document.title =
       topic && topic.label !== preset.label

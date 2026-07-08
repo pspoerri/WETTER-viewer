@@ -13,8 +13,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/pspoerri/wetter/internal/config"
-	"github.com/pspoerri/wetter/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/engine"
 )
 
 type Server struct {
@@ -40,10 +40,10 @@ func New(eng *engine.Engine, cfg *config.Config, status func() any) *Server {
 func (s *Server) metrics() {
 	s.once.Do(func() {
 		s.reqs = promauto.NewCounterVec(prometheus.CounterOpts{
-			Name: "wetter_http_requests_total",
+			Name: "grib_viewer_http_requests_total",
 		}, []string{"route", "status"})
 		s.dur = promauto.NewHistogramVec(prometheus.HistogramOpts{
-			Name:    "wetter_http_request_seconds",
+			Name:    "grib_viewer_http_request_seconds",
 			Buckets: prometheus.DefBuckets,
 		}, []string{"route"})
 	})

@@ -1,4 +1,4 @@
-# WETTER-viewer
+# GRIB-viewer
 
 Note: **This project is 100% AI generated.
 No guarantees. Best effort has been taken to validate the project.**
@@ -18,23 +18,23 @@ Specs live in `docs/specs/`; measured performance in
 
 Grab a self-contained binary (UI embedded, served at `/`) from the
 [GitHub releases](https://github.com/pspoerri/WETTER-viewer/releases),
-or build it yourself with `make release` (→ `bin/wetter`, see
+or build it yourself with `make release` (→ `bin/grib-viewer`, see
 [Building from source](#building-from-source)). Then:
 
 ```bash
 # macOS only: downloaded binaries carry the quarantine flag — remove it first
-xattr -d com.apple.quarantine wetter
+xattr -d com.apple.quarantine grib-viewer
 
-./wetter serve --fetch --config wetter.yaml
+./grib-viewer serve --fetch --config grib-viewer.yaml
 ```
 
 That's the whole deployment: UI + API + fetch loops on one port.
 Without `--fetch`, serve never downloads — it only reads the existing
-buffer (run `wetter fetch` separately, e.g. from a timer/cron).
+buffer (run `grib-viewer fetch` separately, e.g. from a timer/cron).
 
 ## Fetching data
 
-Every source in `wetter.yaml` (spec 01) declares how it is fetched. A
+Every source in `grib-viewer.yaml` (spec 01) declares how it is fetched. A
 folder source indexes any `*.grib2` files by their message headers — no
 filename convention needed, synthetic/debug reference times display as
 lead hours (+0h, +6h, …).
@@ -64,13 +64,13 @@ Commands:
 
 ```bash
 # single pass over every source with fetch != off, then exit
-./bin/wetter fetch --config wetter.yaml --once      # = make fetch
+./bin/grib-viewer fetch --config grib-viewer.yaml --once      # = make fetch
 
 # single pass for one source (any fetch mode)
-./bin/wetter fetch --config wetter.yaml --source iconch1   # = make fetch-one SOURCE=iconch1
+./bin/grib-viewer fetch --config grib-viewer.yaml --source iconch1   # = make fetch-one SOURCE=iconch1
 
 # continuous fetch loops without the API server
-./bin/wetter fetch --config wetter.yaml
+./bin/grib-viewer fetch --config grib-viewer.yaml
 ```
 
 Downloads land under `data_dir/{source}/runs/{run}/` (decompressed
@@ -83,10 +83,10 @@ index files where they live. The newest `keep_runs` runs are kept;
 
 ```bash
 # UI + API + fetch loops in-process, one port        (= make serve-fetch)
-./bin/wetter serve --fetch --config wetter.yaml
+./bin/grib-viewer serve --fetch --config grib-viewer.yaml
 
 # serve only (default): existing buffer, never downloads   (= make serve)
-./bin/wetter serve --config wetter.yaml
+./bin/grib-viewer serve --config grib-viewer.yaml
 
 # fetch progress / buffer state
 curl http://127.0.0.1:8080/api/status
@@ -96,7 +96,7 @@ curl http://127.0.0.1:8080/api/status
 
 The client reads all map data directly (no proxying needed). Both the
 basemap archive and the terrain server are configurable in
-`wetter.yaml` (served to the UI at `/api/mapconfig`; omit a field to
+`grib-viewer.yaml` (served to the UI at `/api/mapconfig`; omit a field to
 keep the default):
 
 ```yaml
@@ -137,7 +137,7 @@ every push. On macOS the downloaded binary carries the quarantine
 attribute and must be cleared before it will run:
 
 ```bash
-xattr -d com.apple.quarantine wetter
+xattr -d com.apple.quarantine grib-viewer
 ```
 
 ### Containers
@@ -153,24 +153,24 @@ make compose-down
 
 The UI is a fully static bundle — fonts and basemap style documents are
 vendored, routing is hash-based (`/#m=…`), so any static file host works
-with no rewrite rules. The only thing it needs at runtime is the wetter
+with no rewrite rules. The only thing it needs at runtime is the grib-viewer
 API under the **same origin** at `/api` (all requests use relative
 paths; there is no configurable API base URL).
 
 Two ways to satisfy that:
 
 1. **Embedded (default):** `make release` gzips `frontend/dist` into the
-   binary; `./bin/wetter serve` then serves the UI at `/` and the API at
+   binary; `./bin/grib-viewer serve` then serves the UI at `/` and the API at
    `/api` from one port. Nothing else to deploy.
 
 2. **Separate static host + reverse proxy:** build the bundle with
    `make frontend` (→ `frontend/dist/`), upload it to any static
    server/CDN, and route `/api/*` on the same host to a running
-   `wetter serve`. Example (Caddy):
+   `grib-viewer serve`. Example (Caddy):
 
    ```
    example.org {
-       root * /srv/wetter-dist
+       root * /srv/grib-viewer-dist
        file_server
        handle /api/* {
            reverse_proxy 127.0.0.1:8080
@@ -197,7 +197,7 @@ Two ways to satisfy that:
   the container build needs no local Go/Node toolchain
 
 `make release` builds the self-contained binary (pure Go, no CGO; the
-frontend is gzipped into it and served at `/`) as `bin/wetter`.
+frontend is gzipped into it and served at `/`) as `bin/grib-viewer`.
 
 ### Development
 
@@ -221,7 +221,7 @@ make ci
 
 ## Layer presets
 
-`wetter.yaml` ships the UI's layer presets. `layers` uses the share-URL
+`grib-viewer.yaml` ships the UI's layer presets. `layers` uses the share-URL
 grammar — arrange the view in the UI and copy the `l=` parameter out of
 the address bar:
 
@@ -241,7 +241,7 @@ presets:
 
 Entries whose `id` matches a built-in preset id (temperature, wind,
 precipitation, …) override that built-in in place — same slot in its
-topic strip, layers/name/icon from the config. The shipped `wetter.yaml`
+topic strip, layers/name/icon from the config. The shipped `grib-viewer.yaml`
 carries the complete built-in catalog this way (generated by
 `node frontend/scripts/gen-preset-yaml.mjs`), so every preset can be
 tuned without touching code. Entries with new (or no) ids appear in the

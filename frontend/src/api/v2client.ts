@@ -118,7 +118,7 @@ function setRun(qs: URLSearchParams, run?: string): void {
   if (run) qs.set("run", run);
 }
 
-/** Server-defined layer presets from the backend config (wetter.yaml
+/** Server-defined layer presets from the backend config (grib-viewer.yaml
  *  `presets:` block). Shape defined in mapConfig.ts (ServerPreset). */
 export function fetchServerPresets<T>(signal?: AbortSignal): Promise<T[]> {
   return getJSON<{ presets?: T[] }>(`/api/presets`, signal).then(

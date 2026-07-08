@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"fmt"
-	"github.com/pspoerri/wetter/internal/gribidx"
+	"github.com/pspoerri/grib-viewer/internal/gribidx"
 	"math"
 	"sync"
 	"time"

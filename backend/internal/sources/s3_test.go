@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/pspoerri/wetter/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/config"
 )
 
 func TestParseS3URL(t *testing.T) {

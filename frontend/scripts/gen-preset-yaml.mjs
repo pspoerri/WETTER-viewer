@@ -1,4 +1,4 @@
-// Emit the full built-in preset catalog as wetter.yaml `presets:` entries
+// Emit the full built-in preset catalog as grib-viewer.yaml `presets:` entries
 // (share-URL layer grammar via encodeLayerSegment). One-shot generator:
 //   node scripts/gen-preset-yaml.mjs
 import { PRESETS, encodeLayerSegment } from "../src/api/mapConfig.ts";

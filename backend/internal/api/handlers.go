@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/config"
-	"github.com/pspoerri/wetter/internal/engine"
-	"github.com/pspoerri/wetter/internal/render"
-	"github.com/pspoerri/wetter/internal/vars"
+	"github.com/pspoerri/grib-viewer/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/render"
+	"github.com/pspoerri/grib-viewer/internal/vars"
 )
 
 func (s *Server) handleHealthz(w http.ResponseWriter, r *http.Request) {

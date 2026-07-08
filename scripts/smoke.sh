@@ -4,8 +4,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-BIN=${BIN:-bin/wetter}
-DIR=$(mktemp -d /tmp/wetter-smoke.XXXXXX)
+BIN=${BIN:-bin/grib-viewer}
+DIR=$(mktemp -d /tmp/grib-viewer-smoke.XXXXXX)
 trap 'kill $SRV_PID 2>/dev/null || true; rm -rf "$DIR"' EXIT
 
 cat > "$DIR/config.yaml" <<EOF

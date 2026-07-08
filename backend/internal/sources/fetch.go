@@ -19,7 +19,7 @@ import (
 // retry with exponential backoff and ±50% jitter, bz2 inflation when
 // a URL ends .bz2, and 4xx-terminal (except 408/429) discrimination.
 
-const userAgent = "wetter/0.1 (+https://github.com/pspoerri/wetter)"
+const userAgent = "grib-viewer/0.1 (+https://github.com/pspoerri/grib-viewer)"
 
 // downloadMaxAttempts is the retry budget for transient failures.
 const downloadMaxAttempts = 4

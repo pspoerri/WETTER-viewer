@@ -10,7 +10,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/config"
 )
 
 // FileRef identifies one file of a run.

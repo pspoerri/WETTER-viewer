@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/pspoerri/wetter/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/config"
 )
 
 // s3Source lists a public S3 bucket prefix via anonymous ListObjectsV2

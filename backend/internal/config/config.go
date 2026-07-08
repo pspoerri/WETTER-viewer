@@ -1,4 +1,4 @@
-// Package config loads the wetter YAML configuration (spec 01).
+// Package config loads the grib-viewer YAML configuration (spec 01).
 package config
 
 import (

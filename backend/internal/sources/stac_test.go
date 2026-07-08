@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/config"
 )
 
 // newSTACTestServer implements enough of the MeteoSwiss STAC API for

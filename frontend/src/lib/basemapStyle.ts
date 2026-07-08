@@ -70,7 +70,7 @@ function coerceBoundariesCoalesce(expr: unknown): unknown {
 }
 
 /** OSM vector basemap source. The authoritative value comes from the
- *  backend config (wetter.yaml `map.pmtiles`, defaulted server-side and
+ *  backend config (grib-viewer.yaml `map.pmtiles`, defaulted server-side and
  *  served at /api/mapconfig; applied by main.tsx before the map
  *  mounts) — the literal below is only the no-backend fallback. Two
  *  forms: an XYZ tile URL template ({z}/{x}/{y}.pbf) or a

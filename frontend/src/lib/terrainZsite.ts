@@ -21,7 +21,7 @@ import { PMTiles } from "pmtiles";
 import type { Window } from "./wxdata2.ts";
 
 /** Terrarium terrain source. The authoritative value comes from the
- *  backend config (wetter.yaml `map.terrain`, defaulted server-side and
+ *  backend config (grib-viewer.yaml `map.terrain`, defaulted server-side and
  *  served at /api/mapconfig; applied by main.tsx before the map
  *  mounts). The literals below are only the no-backend fallback
  *  (static-only hosting without the API). Two forms: a full tile URL

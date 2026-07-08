@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/engine"
 )
 
 // minimal protobuf reader for round-trip verification

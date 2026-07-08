@@ -121,7 +121,7 @@ export interface MapConfig {
   satellite?: boolean;
   /** Marks user-defined presets stored in localStorage. */
   user?: boolean;
-  /** Marks server-defined presets from the backend config (wetter.yaml
+  /** Marks server-defined presets from the backend config (grib-viewer.yaml
    *  `presets:` block). Listed like user presets but not deletable and
    *  never persisted to localStorage. */
   server?: boolean;
@@ -743,7 +743,7 @@ export function findTopicForPresetId(
 // matches a built-in replace it IN PLACE — the topic strips resolve
 // preset ids through findPreset, so an overridden preset keeps its
 // topic slot, threshold ladder, and hash id while taking its layers,
-// label, and icon from wetter.yaml. Installed once by applyServerPresets.
+// label, and icon from grib-viewer.yaml. Installed once by applyServerPresets.
 const presetOverrides = new Map<string, MapConfig>();
 
 export function findPreset(id: string): MapConfig | undefined {

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pspoerri/wetter/internal/engine"
-	"github.com/pspoerri/wetter/internal/vars"
+	"github.com/pspoerri/grib-viewer/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/vars"
 )
 
 // varRequest is a fully parsed variable id (spec 03 grammar):

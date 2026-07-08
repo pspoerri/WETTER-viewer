@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/buffer"
-	"github.com/pspoerri/wetter/internal/gribidx"
+	"github.com/pspoerri/grib-viewer/internal/buffer"
+	"github.com/pspoerri/grib-viewer/internal/gribidx"
 )
 
 // Integration test against real GRIB fixtures. Set WETTER_FIXTURE_DIR

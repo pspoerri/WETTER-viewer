@@ -13,8 +13,8 @@ import (
 	gribgrid "github.com/pspoerri/go-tiled-eccodes/grid"
 	"github.com/pspoerri/go-tiled-eccodes/tile"
 
-	"github.com/pspoerri/wetter/internal/ensemble"
-	"github.com/pspoerri/wetter/internal/vars"
+	"github.com/pspoerri/grib-viewer/internal/ensemble"
+	"github.com/pspoerri/grib-viewer/internal/vars"
 )
 
 var (

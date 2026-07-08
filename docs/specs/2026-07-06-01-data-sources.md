@@ -158,7 +158,7 @@ downloading.
 ## Fetch orchestration
 
 - `fetch: loop` sources run on independent tickers (`interval`) inside
-  `wetter serve` (or `wetter fetch`); `once` sources run a single pass
+  `grib-viewer serve` (or `grib-viewer fetch`); `once` sources run a single pass
   at startup; `off` sources are only read.
 - Per-source pass: Discover → diff against buffer → download missing
   files with a bounded worker pool (8 connections per host — the Go

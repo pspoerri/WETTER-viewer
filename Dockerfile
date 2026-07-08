@@ -1,5 +1,5 @@
-# Self-contained wetter image: frontend build embedded in the Go
-# binary (served at /), API under /api, fetch loops per wetter.yaml.
+# Self-contained grib-viewer image: frontend build embedded in the Go
+# binary (served at /), API under /api, fetch loops per grib-viewer.yaml.
 FROM node:22-alpine AS webui
 RUN corepack enable
 WORKDIR /src
@@ -18,13 +18,13 @@ COPY backend/ backend/
 COPY --from=webui /src/dist backend/internal/webui/dist
 RUN find backend/internal/webui/dist -type f ! -name '*.gz' -exec gzip -9 {} \; \
  && cd backend && CGO_ENABLED=0 go build -trimpath \
-    -ldflags="-s -w -X github.com/pspoerri/wetter/internal/api.version=${VERSION}" \
-    -o /wetter ./cmd/wetter
+    -ldflags="-s -w -X github.com/pspoerri/grib-viewer/internal/api.version=${VERSION}" \
+    -o /grib-viewer ./cmd/grib-viewer
 
 FROM alpine:3.21
 RUN apk add --no-cache ca-certificates tzdata
-COPY --from=build /wetter /usr/local/bin/wetter
+COPY --from=build /grib-viewer /usr/local/bin/grib-viewer
 WORKDIR /app
 EXPOSE 8080
-ENTRYPOINT ["wetter"]
-CMD ["serve", "--fetch", "--config", "wetter.yaml", "--addr", ":8080"]
+ENTRYPOINT ["grib-viewer"]
+CMD ["serve", "--fetch", "--config", "grib-viewer.yaml", "--addr", ":8080"]

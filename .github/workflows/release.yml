@@ -40,11 +40,11 @@ jobs:
             echo "== $GOOS/$GOARCH"
             ( cd backend && CGO_ENABLED=0 GOOS="$GOOS" GOARCH="$GOARCH" \
                 go build -trimpath \
-                  -ldflags="-s -w -X github.com/pspoerri/wetter/internal/api.version=${TAG}" \
-                  -o ../out/wetter ./cmd/wetter )
-            tar -czf "out/wetter_${TAG}_${GOOS}_${GOARCH}.tar.gz" \
-                -C out wetter -C .. wetter.yaml README.md
-            rm out/wetter
+                  -ldflags="-s -w -X github.com/pspoerri/grib-viewer/internal/api.version=${TAG}" \
+                  -o ../out/grib-viewer ./cmd/grib-viewer )
+            tar -czf "out/grib-viewer_${TAG}_${GOOS}_${GOARCH}.tar.gz" \
+                -C out grib-viewer -C .. grib-viewer.yaml README.md
+            rm out/grib-viewer
           done
           ls -lh out/
 

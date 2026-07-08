@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/ensemble"
-	"github.com/pspoerri/wetter/internal/vars"
+	"github.com/pspoerri/grib-viewer/internal/ensemble"
+	"github.com/pspoerri/grib-viewer/internal/vars"
 )
 
 // Derived variables (spec 02): concrete kernels, computed per member

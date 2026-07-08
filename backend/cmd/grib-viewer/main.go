@@ -1,7 +1,7 @@
-// wetter: standalone NWP GRIB viewer (specs in docs/specs/).
+// grib-viewer: standalone NWP GRIB viewer (specs in docs/specs/).
 //
-//	wetter serve --config wetter.yaml [--fetch]   HTTP API (+ fetch loops with --fetch)
-//	wetter fetch --config wetter.yaml [--once] [--source id]
+//	grib-viewer serve --config grib-viewer.yaml [--fetch]   HTTP API (+ fetch loops with --fetch)
+//	grib-viewer fetch --config grib-viewer.yaml [--once] [--source id]
 package main
 
 import (
@@ -14,22 +14,22 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/pspoerri/wetter/internal/api"
-	"github.com/pspoerri/wetter/internal/buffer"
-	"github.com/pspoerri/wetter/internal/config"
-	"github.com/pspoerri/wetter/internal/engine"
-	"github.com/pspoerri/wetter/internal/sources"
-	"github.com/pspoerri/wetter/internal/webui"
+	"github.com/pspoerri/grib-viewer/internal/api"
+	"github.com/pspoerri/grib-viewer/internal/buffer"
+	"github.com/pspoerri/grib-viewer/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/sources"
+	"github.com/pspoerri/grib-viewer/internal/webui"
 )
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "usage: wetter serve|fetch --config wetter.yaml")
+		fmt.Fprintln(os.Stderr, "usage: grib-viewer serve|fetch --config grib-viewer.yaml")
 		os.Exit(2)
 	}
 	cmd := os.Args[1]
 	fs := flag.NewFlagSet(cmd, flag.ExitOnError)
-	cfgPath := fs.String("config", "wetter.yaml", "config file")
+	cfgPath := fs.String("config", "grib-viewer.yaml", "config file")
 	once := fs.Bool("once", false, "fetch: single pass, then exit")
 	sourceID := fs.String("source", "", "fetch/bench: only this source")
 	addr := fs.String("addr", "", "serve: listen address override")
@@ -77,7 +77,7 @@ func main() {
 	case "serve":
 		eng := engine.New(buf, cfg.Cache.FieldsMB)
 		// downloads are opt-in: by default serve only reads the
-		// existing buffer; run `wetter fetch` separately or pass --fetch
+		// existing buffer; run `grib-viewer fetch` separately or pass --fetch
 		if *fetchLoops {
 			go orch.Run(ctx)
 			go func() {
@@ -96,7 +96,7 @@ func main() {
 			<-ctx.Done()
 			hs.Shutdown(context.Background())
 		}()
-		slog.Info("wetter serve", "addr", cfg.Listen, "data_dir", cfg.DataDir)
+		slog.Info("grib-viewer serve", "addr", cfg.Listen, "data_dir", cfg.DataDir)
 		if err := hs.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			fatal(err)
 		}
@@ -112,6 +112,6 @@ func main() {
 }
 
 func fatal(err error) {
-	fmt.Fprintln(os.Stderr, "wetter:", err)
+	fmt.Fprintln(os.Stderr, "grib-viewer:", err)
 	os.Exit(1)
 }

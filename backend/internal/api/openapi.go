@@ -28,7 +28,7 @@ func (s *Server) handleOpenAPI(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, 200, map[string]any{
 		"openapi": "3.0.3",
 		"info": map[string]any{
-			"title":   "wetter",
+			"title":   "grib-viewer",
 			"version": "1",
 			"description": "Standalone NWP GRIB viewer API. Windows are bbox-addressed " +
 				"(no tiling); fields derive online from buffered GRIB.",

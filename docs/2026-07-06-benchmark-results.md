@@ -1,6 +1,6 @@
 # End-to-end benchmark — 2026-07-06
 
-Method: `wetter bench` fetches a bounded **real** run from DWD
+Method: `grib-viewer bench` fetches a bounded **real** run from DWD
 opendata into the buffer, serves the API in-process (httptest, full
 HTTP path incl. gzip + protobuf encode), and times requests. Hardware:
 Apple Silicon laptop. Reproduce with `make bench` / `make bench-eps`.

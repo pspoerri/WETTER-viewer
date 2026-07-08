@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/config"
 )
 
 func autoindex(names ...string) string {

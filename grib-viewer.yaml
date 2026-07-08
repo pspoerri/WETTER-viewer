@@ -1,4 +1,4 @@
-# wetter example config (spec 01). `wetter serve --config wetter.yaml`
+# grib-viewer example config (spec 01). `grib-viewer serve --config grib-viewer.yaml`
 listen: :8080
 data_dir: ./data
 cache:

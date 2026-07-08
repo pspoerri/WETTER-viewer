@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/gribidx"
+	"github.com/pspoerri/grib-viewer/internal/gribidx"
 )
 
 func TestGroupByRef(t *testing.T) {

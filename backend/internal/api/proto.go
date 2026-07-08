@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"math"
 
-	"github.com/pspoerri/wetter/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/engine"
 )
 
 // Hand-rolled protobuf encoder for the Window message (spec 03).

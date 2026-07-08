@@ -2,7 +2,7 @@
  * Human-readable model metadata registry.
  *
  * The metadata itself lives in the backend config (each source's `info:`
- * block in wetter.yaml) and arrives with the /api/models catalog;
+ * block in grib-viewer.yaml) and arrives with the /api/models catalog;
  * setModelCatalog() feeds it here once at startup. Components keep the
  * synchronous modelInfoFor(id) lookup they always had — for unknown ids
  * (catalog not loaded yet, or a model without an info block) it degrades

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/buffer"
-	"github.com/pspoerri/wetter/internal/config"
-	"github.com/pspoerri/wetter/internal/gribidx"
+	"github.com/pspoerri/grib-viewer/internal/buffer"
+	"github.com/pspoerri/grib-viewer/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/gribidx"
 )
 
 func TestNewDispatch(t *testing.T) {

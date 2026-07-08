@@ -17,7 +17,7 @@ import { setTerrainTiles } from "./lib/terrainZsite";
 export const pmtilesProtocol = new Protocol();
 maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
 
-// Map data sources are configurable (wetter.yaml `map:` block, served
+// Map data sources are configurable (grib-viewer.yaml `map:` block, served
 // at /api/mapconfig). Applied via top-level await BEFORE the app
 // renders so nothing constructs a style or map against the built-in
 // defaults first; absent fields / a failed fetch keep the defaults.

@@ -1,4 +1,4 @@
-module github.com/pspoerri/wetter
+module github.com/pspoerri/grib-viewer
 
 go 1.26.4
 

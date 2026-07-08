@@ -382,7 +382,7 @@
   pointer-events: none;
 }
 
-/* Left column of the status badge: "Wetter" title + Alpha tag, with
+/* Left column of the status badge: "GRIB Viewer" title + Alpha tag, with
    a vertical divider separating it from the Time/Model stats. */
 .status-badge-stats {
   display: flex;
@@ -592,7 +592,7 @@
 /* =====================================================================
    Location search (top center)
    ===================================================================== */
-/* Anchored under the Wetter status badge in the top-right corner;
+/* Anchored under the status badge in the top-right corner;
    the results panel grows leftward from the right edge. */
 .location-search {
   position: absolute;
@@ -3058,7 +3058,7 @@ circle.wind-barb.median {
 
   .layer-sub-control { grid-template-columns: 72px 1fr auto; }
 
-  /* Keep the Wetter/time pill in the top-right on mobile so it reads
+  /* Keep the title/time pill in the top-right on mobile so it reads
      the same as desktop, but drop its z-index below the controls
      panel — when the user opens the hamburger menu, the panel covers
      the badge instead of the other way around, so the full menu width

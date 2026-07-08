@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/config"
 )
 
 // dwdSource lists DWD's opendata mod_autoindex file server at

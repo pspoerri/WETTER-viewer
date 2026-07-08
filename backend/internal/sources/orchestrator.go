@@ -14,9 +14,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/buffer"
-	"github.com/pspoerri/wetter/internal/config"
-	"github.com/pspoerri/wetter/internal/gribidx"
+	"github.com/pspoerri/grib-viewer/internal/buffer"
+	"github.com/pspoerri/grib-viewer/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/gribidx"
 )
 
 // SourceStatus is the per-source state surfaced via /api/status.

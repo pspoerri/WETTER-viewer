@@ -1,18 +1,18 @@
 # podman-compose up -d   (docker compose works identically)
 #
-# Mounts ./wetter.yaml (sources config) and ./data (the GRIB buffer)
+# Mounts ./grib-viewer.yaml (sources config) and ./data (the GRIB buffer)
 # into the container's workdir, so the config's relative `data_dir:
 # ./data` lands on the host folder. UI + API on http://localhost:8080.
 services:
-  wetter:
+  grib-viewer:
     build:
       context: .
       args:
         VERSION: ${VERSION:-dev}  # git describe, set by `make compose-up`
-    image: wetter:latest
+    image: grib-viewer:latest
     ports:
       - "8080:8080"
     volumes:
       - ./data:/app/data
-      - ./wetter.yaml:/app/wetter.yaml:ro
+      - ./grib-viewer.yaml:/app/grib-viewer.yaml:ro
     restart: unless-stopped

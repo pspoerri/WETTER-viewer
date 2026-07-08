@@ -12,11 +12,11 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.com/pspoerri/wetter/internal/api"
-	"github.com/pspoerri/wetter/internal/buffer"
-	"github.com/pspoerri/wetter/internal/config"
-	"github.com/pspoerri/wetter/internal/engine"
-	"github.com/pspoerri/wetter/internal/sources"
+	"github.com/pspoerri/grib-viewer/internal/api"
+	"github.com/pspoerri/grib-viewer/internal/buffer"
+	"github.com/pspoerri/grib-viewer/internal/config"
+	"github.com/pspoerri/grib-viewer/internal/engine"
+	"github.com/pspoerri/grib-viewer/internal/sources"
 )
 
 // runBench: end-to-end benchmark (spec 06 / goal): fetch (unless
